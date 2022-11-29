@@ -23,11 +23,9 @@ public class EquationSolver {
     public void JacobiIterativeMethod() {
         double[] prev = new double[Matrix.length];
         double[] next = new double[Matrix.length];
-        int maxiterations = 2;
+        int maxiterations = 3;
         int iterations = 0;
         double sum = 0;
-        Arrays.fill(prev, 0);
-        Arrays.fill(next, 0);
         while (iterations < maxiterations) {
             for (int i = 0; i < Matrix.length; i++) {
                 for (int j = 0; j < Matrix[0].length; j++) {
@@ -38,12 +36,32 @@ public class EquationSolver {
                 next[i] = (Solution[i] - sum) / Matrix[i][i];
                 sum = 0;
             }
-            System.out.println(Arrays.toString(prev));
             prev = next;
-            System.out.println(Arrays.toString(prev));
             iterations++;
         }
+        System.out.println(Arrays.toString(next));
 
+    }
+
+    public void GaussSiedalMethod() {
+        double[] variablevalues = new double[Matrix.length];
+        int maxiterations = 3;
+        int iterations = 0;
+        double sum = 0;
+        while (iterations < maxiterations) {
+            for (int i=0; i<Matrix.length; i++) {
+                for (int j=0; j<Matrix[0].length; j++) {
+                    if (i != j) {
+                        sum = sum + (Matrix[i][j] * variablevalues[j]);
+                    }
+                }
+                variablevalues[i] = (Solution[i] - sum) / Matrix[i][i];
+                sum = 0; 
+            }
+            iterations++;
+            
+        }
+        System.out.println(Arrays.toString(variablevalues)); 
     }
 
 }
