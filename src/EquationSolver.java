@@ -4,7 +4,7 @@ public class EquationSolver {
 
     private double[][] Matrix;
     private double[] Solution;
-    private double Tolerace = 1 * Math.pow(10, -10);
+    private double Tolerance = 1 * Math.pow(10, -13);
 
     public EquationSolver(int n) {
         double sum = 0;
@@ -13,11 +13,11 @@ public class EquationSolver {
 
         for (int i=0; i<n; i++) {
             for (int j=0; j<n; j++) {
-                Matrix[i][j] = Math.random()*1000;
+                Matrix[i][j] = (Math.random());
                 sum = sum + Matrix[i][j];
             }
             Matrix[i][i] = sum;
-            Solution[i] = Math.random()*1000;
+            Solution[i] = Math.random();
             sum = 0;
         }
     }
@@ -28,7 +28,7 @@ public class EquationSolver {
         double residual = Double.MAX_VALUE;
         int iterations = 0;
         double sum = 0;
-        while (residual > Tolerace) {
+        while (residual > Tolerance) {
             for (int i = 0; i < Matrix.length; i++) {
                 for (int j = 0; j < Matrix[0].length; j++) {
                     if (i != j) {
@@ -38,7 +38,9 @@ public class EquationSolver {
                 next[i] = (Solution[i] - sum) / Matrix[i][i];
                 sum = 0;
             }
-            prev = next;
+            for (int k=0; k<prev.length; k++) {
+                prev[k] = next[k];
+            }
             iterations++;
             double[] Difference = SubtractMatrix(MultiplyMatrix(Matrix, prev), Solution);
             residual = residual(Difference);
@@ -53,7 +55,7 @@ public class EquationSolver {
         double residual = Double.MAX_VALUE;
         int iterations = 0;
         double sum = 0;
-        while (residual > Tolerace) {
+        while (residual > Tolerance) {
             for (int i=0; i<Matrix.length; i++) {
                 for (int j=0; j<Matrix[0].length; j++) {
                     if (i != j) {
